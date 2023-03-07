@@ -14,7 +14,7 @@
       "cStandard": "c17",
       "cppStandard": "c++17",
       "intelliSenseMode": "${default}",
-      "configurationProvider": "ms-vscode.cmake-tools"
+      "configurationProvider": "ms-vscode.cpptools-tools"
     }
   ],
   "version": 4

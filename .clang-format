@@ -1,11 +1,11 @@
 BasedOnStyle: Google
-IndentWidth: 2
+IndentWidth: 3
 ColumnLimit: 120
 Language: Cpp
 
 # Use C++ style pointer alignments.
 DerivePointerAlignment: false
-PointerAlignment: Left
+PointerAlignment: Right
 
 # Less-compact, but more Git friendly style options.
 AlignAfterOpenBracket: AlwaysBreak
