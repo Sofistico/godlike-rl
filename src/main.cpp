@@ -32,7 +32,7 @@ static tcod::Context g_context;  // The global libtcod context.
 void main_loop() {
   // Rendering.
   g_console.clear();
-  tcod::print(g_console, {0, 0}, "Hello World", TCOD_white, std::nullopt);
+  tcod::print(g_console, {0, 0}, "Hello World", TCOD_ColorRGB{255, 255, 255}, std::nullopt);
   g_context.present(g_console);
 
   // Handle input.
@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
     params.renderer_type = TCOD_RENDERER_SDL2;
     params.vsync = 1;
     params.sdl_window_flags = SDL_WINDOW_RESIZABLE;
-    params.window_title = "Libtcod Template Project";
+    params.window_title = "Godlike Roguelike";
 
     auto tileset = tcod::load_tilesheet(get_data_dir() / "dejavu16x16_gs_tc.png", {32, 8}, tcod::CHARMAP_TCOD);
     params.tileset = tileset.get();
