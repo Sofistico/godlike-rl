@@ -8,9 +8,15 @@
 #include <iostream>
 #include <libtcod.hpp>
 
+#include "actor.hpp"
+#include "map.hpp"
+
 #if defined(_MSC_VER)
 #pragma warning(disable : 4297)  // Allow "throw" in main().  Letting the compiler handle termination.
 #endif
+
+static tcod::Console g_console;  // The global console object.
+static tcod::Context g_context;  // The global libtcod context.
 
 /// Return the data directory.
 auto get_data_dir() -> std::filesystem::path {
@@ -24,9 +30,6 @@ auto get_data_dir() -> std::filesystem::path {
   }
   return root_directory / "data";
 };
-
-static tcod::Console g_console;  // The global console object.
-static tcod::Context g_context;  // The global libtcod context.
 
 /// Game loop.
 void main_loop() {

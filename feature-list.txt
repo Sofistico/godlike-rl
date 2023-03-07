@@ -1,0 +1,11 @@
+- Generate a World
+- Generate basic civilization for the World
+- create a pantheon for the world
+- god customization
+- godly portfolio
+- Combat
+- Magic
+- Miracles
+- Winning condition(Kill all gods, kill everyone)
+- God realms
+- and what i can find time to create
