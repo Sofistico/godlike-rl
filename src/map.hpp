@@ -1,30 +1,34 @@
 #pragma once
+#include <libtcod.hpp>
 
 struct Tile {
-   int x;  // pos x on map
-   int y;  // pos y on map
-   int z;  // pos z in map
-   int cha;  // char of the tile
    bool explored;  // has the player explored this tile?
    bool isWalkable;  // is it walkable?
    bool isTransparent;  // is it transparent?
-   TCODColor color;
-   Tile(int x, int y, int z, int cha, bool walkable, bool transparent, TCODColor col)
-       : explored(false), isWalkable(walkable), isTransparent(transparent) {
-      x = x;
-      y = y;
-      z = z;
-      cha = cha;
-      color = col;
-   }
+   Tile(bool walkable, bool transparent) : explored(false), isWalkable(walkable), isTransparent(transparent) {}
+   Tile() : explored(false), isWalkable(true), isTransparent(true) {}  // defaults to a floor tile type
 };
 
 class Map {
   public:
    int height, width;  // the width and height
-   int depth;  // z level of the map
+
+   bool isTransparent(int x, int y) const;
+   bool isInFov(int x, int y) const;
+   bool isExplored(int x, int y) const;
+   bool isWalkable(int x, int y) const;
+
+   void render(tcod::Console &console) const;
+   void computeFov();
+   void addEntity(int x, int y);
+
+   Map(int height, int width);
+   ~Map();
+
   private:
    Tile *tiles;
+   TCODMap *internalMap;
 
-   TCODMap internalMap;
+   // void dig(int x1, int y1, int x2, int y2);
+   // void createRoom(bool first, int x1, int y1, int x2, int y2);
 };
