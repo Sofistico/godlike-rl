@@ -6,7 +6,15 @@ Map::Map(int height, int width) : width(width), height(height) {
 
    for (int x = 0; x < height; x++) {
       for (int y = 0; y < width; y++) {
-         internalMap->setProperties(x, y, true, true);
+         if (x == 0 || y == 0 || x == width - 1 || y == height - 1) {
+            tiles[x + y * width].isTransparent = false;
+            tiles[x + y * width].isWalkable = false;
+            internalMap->setProperties(x, y, false, false);
+         } else {
+            tiles[x + y * width].isTransparent = true;
+            tiles[x + y * width].isWalkable = true;
+            internalMap->setProperties(x, y, true, true);
+         }
       }
    }
 };
@@ -31,6 +39,10 @@ inline bool Map::isExplored(int x, int y) const { return tiles[x + y * width].ex
 inline bool Map::isWalkable(int x, int y) const { return tiles[x + y * width].isWalkable; }
 
 void Map::render(tcod::Console &console) const {
+   for (auto actor : actors) {
+      console.at({actor.x, actor.y}) = actor.getConsoleTile();
+   }
+
    for (int x = 0; x < width; x++) {
       for (int y = 0; y < height; y++) {
          if (isInFov(x, y)) {
@@ -50,4 +62,10 @@ void Map::render(tcod::Console &console) const {
 
 void Map::computeFov() { internalMap->computeFov(5, 5, 1000); }
 
-void Map::addEntity(int x, int y) {}
+void Map::addEntity(Actor actor) {
+   int x = actor.x;
+   int y = actor.y;
+   if (isWalkable(x, y)) {
+      actors.push_back(actor);
+   }
+}

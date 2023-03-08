@@ -1,9 +1,13 @@
 #pragma once
 #include <libtcod.hpp>
 
-class actor {
+class Actor {
   public:
-   int x, y, z;  // pos on map
+   int x, y;  // pos on map
    int ch;  // char of the actor
-   TCODColor color;
+   TCODColor fg;
+   TCODColor bg;
+   Actor(int x, int y, int ch, TCODColor fg, TCODColor bg);
+
+   TCOD_ConsoleTile getConsoleTile() const;
 };

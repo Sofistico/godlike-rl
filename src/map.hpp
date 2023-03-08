@@ -2,6 +2,8 @@
 #include <libtcod.hpp>
 #include <vector>
 
+#include "actor.hpp"
+
 struct Tile {
    bool explored;  // has the player explored this tile?
    bool isWalkable;  // is it walkable?
@@ -23,7 +25,7 @@ class Map {
 
    void render(tcod::Console &console) const;
    void computeFov();
-   void addEntity(int x, int y);
+   void addEntity(Actor actor);
 
    Map(int height, int width);
    ~Map();
@@ -31,6 +33,7 @@ class Map {
   private:
    Tile *tiles;
    TCODMap *internalMap;
+   std::vector<Actor> actors;
 
    // void dig(int x1, int y1, int x2, int y2);
    // void createRoom(bool first, int x1, int y1, int x2, int y2);

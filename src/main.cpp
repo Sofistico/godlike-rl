@@ -38,6 +38,8 @@ void main_loop() {
    // tcod::print(g_console, {0, 0}, "Hello World", TCOD_ColorRGB{255, 255, 255}, std::nullopt);
    // g_console.clear();
    Map *map = new Map(10, 10);
+   Actor *actor = new Actor(5, 5, '@', {255, 255, 255}, {0, 0, 0});
+   map->addEntity(*actor);
    map->computeFov();
    map->render(g_console);
    g_context.present(g_console);
