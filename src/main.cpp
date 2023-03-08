@@ -33,11 +33,14 @@ auto get_data_dir() -> std::filesystem::path {
 
 /// Game loop.
 void main_loop() {
+   // set up map and some basic tiles
    // Rendering.
-   g_console.clear();
-   tcod::print(g_console, {0, 0}, "Hello World", TCOD_ColorRGB{255, 255, 255}, std::nullopt);
+   // tcod::print(g_console, {0, 0}, "Hello World", TCOD_ColorRGB{255, 255, 255}, std::nullopt);
+   // g_console.clear();
+   Map *map = new Map(10, 10);
+   map->computeFov();
+   map->render(g_console);
    g_context.present(g_console);
-
    // Handle input.
    SDL_Event event;
 #ifndef __EMSCRIPTEN__
@@ -46,6 +49,8 @@ void main_loop() {
 #endif
    while (SDL_PollEvent(&event)) {
       switch (event.type) {
+            // case SDL_KEYDOWN:
+
          case SDL_QUIT:
             std::exit(EXIT_SUCCESS);
             break;

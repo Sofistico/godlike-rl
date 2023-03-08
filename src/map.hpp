@@ -1,5 +1,6 @@
 #pragma once
 #include <libtcod.hpp>
+#include <vector>
 
 struct Tile {
    bool explored;  // has the player explored this tile?
@@ -9,14 +10,16 @@ struct Tile {
    Tile() : explored(false), isWalkable(true), isTransparent(true) {}  // defaults to a floor tile type
 };
 
+enum struct Tiles { Floor = 0, Wall };
+
 class Map {
   public:
    int height, width;  // the width and height
 
-   bool isTransparent(int x, int y) const;
+   inline bool isTransparent(int x, int y) const;
    bool isInFov(int x, int y) const;
-   bool isExplored(int x, int y) const;
-   bool isWalkable(int x, int y) const;
+   inline bool isExplored(int x, int y) const;
+   inline bool isWalkable(int x, int y) const;
 
    void render(tcod::Console &console) const;
    void computeFov();
