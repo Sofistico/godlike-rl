@@ -25,6 +25,7 @@
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
   "files.associations": {
+    "*.html": "html",
     "algorithm": "cpp",
     "array": "cpp",
     "atomic": "cpp",
@@ -100,6 +101,8 @@
     "xtr1common": "cpp",
     "xtree": "cpp",
     "xutility": "cpp",
-    "fstream": "cpp"
+    "fstream": "cpp",
+    "coroutine": "cpp",
+    "span": "cpp"
   }
 }

@@ -39,10 +39,6 @@ inline bool Map::isExplored(int x, int y) const { return tiles[x + y * width].ex
 inline bool Map::isWalkable(int x, int y) const { return tiles[x + y * width].isWalkable; }
 
 void Map::render(tcod::Console &console) const {
-   for (auto actor : actors) {
-      console.at({actor.x, actor.y}) = actor.getConsoleTile();
-   }
-
    for (int x = 0; x < width; x++) {
       for (int y = 0; y < height; y++) {
          if (isInFov(x, y)) {
@@ -58,9 +54,12 @@ void Map::render(tcod::Console &console) const {
          }
       }
    }
+   for (auto actor : actors) {
+      actor.render(console);
+   }
 }
 
-void Map::computeFov() { internalMap->computeFov(5, 5, 1000); }
+void Map::computeFov() { internalMap->computeFov(player->x, player->y, 5); }
 
 void Map::addEntity(Actor actor) {
    int x = actor.x;

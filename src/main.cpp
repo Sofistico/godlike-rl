@@ -9,6 +9,7 @@
 #include <libtcod.hpp>
 
 #include "actor.hpp"
+#include "input_handler.hpp"
 #include "map.hpp"
 
 #if defined(_MSC_VER)
@@ -17,6 +18,8 @@
 
 static tcod::Console g_console;  // The global console object.
 static tcod::Context g_context;  // The global libtcod context.
+static Map *g_map;
+static Actor *g_player;
 
 /// Return the data directory.
 auto get_data_dir() -> std::filesystem::path {
@@ -37,12 +40,6 @@ void main_loop() {
    // Rendering.
    // tcod::print(g_console, {0, 0}, "Hello World", TCOD_ColorRGB{255, 255, 255}, std::nullopt);
    // g_console.clear();
-   Map *map = new Map(10, 10);
-   Actor *actor = new Actor(5, 5, '@', {255, 255, 255}, {0, 0, 0});
-   map->addEntity(*actor);
-   map->computeFov();
-   map->render(g_console);
-   g_context.present(g_console);
    // Handle input.
    SDL_Event event;
 #ifndef __EMSCRIPTEN__
@@ -51,8 +48,15 @@ void main_loop() {
 #endif
    while (SDL_PollEvent(&event)) {
       switch (event.type) {
-            // case SDL_KEYDOWN:
+         case SDL_KEYDOWN:
+            if (Input::move(event.key.keysym.sym, *g_player)) {
+               g_map->computeFov();
+               g_console.clear();
+               g_map->render(g_console);
+               g_context.present(g_console);
+            }
 
+            break;
          case SDL_QUIT:
             std::exit(EXIT_SUCCESS);
             break;
@@ -79,6 +83,14 @@ int main(int argc, char **argv) {
       params.console = g_console.get();
 
       g_context = tcod::Context(params);
+      g_map = new Map(10, 10);
+      g_player = new Actor(5, 5, '@', {255, 255, 255}, {0, 0, 0});
+      g_map->addEntity(*g_player);
+      g_map->player = g_player;
+      g_map->computeFov();
+      g_map->render(g_console);
+      g_context.present(g_console);
+      g_console.clear();
 
 #ifdef __EMSCRIPTEN__
       emscripten_set_main_loop(main_loop, 0, 0);

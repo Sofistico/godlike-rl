@@ -17,6 +17,7 @@ enum struct Tiles { Floor = 0, Wall };
 class Map {
   public:
    int height, width;  // the width and height
+   Actor *player;
 
    inline bool isTransparent(int x, int y) const;
    bool isInFov(int x, int y) const;
