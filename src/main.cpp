@@ -49,7 +49,7 @@ void main_loop() {
    while (SDL_PollEvent(&event)) {
       switch (event.type) {
          case SDL_KEYDOWN:
-            if (Input::move(event.key.keysym.sym, *g_player)) {
+            if (Input::move(event.key.keysym.sym, *g_player, g_map)) {
                g_map->computeFov();
                g_console.clear();
                g_map->render(g_console);
@@ -85,7 +85,7 @@ int main(int argc, char **argv) {
       g_context = tcod::Context(params);
       g_map = new Map(10, 10);
       g_player = new Actor(5, 5, '@', {255, 255, 255}, {0, 0, 0});
-      g_map->addEntity(*g_player);
+      g_map->addEntity(g_player);
       g_map->player = g_player;
       g_map->computeFov();
       g_map->render(g_console);

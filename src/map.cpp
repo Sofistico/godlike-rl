@@ -55,15 +55,15 @@ void Map::render(tcod::Console &console) const {
       }
    }
    for (auto actor : actors) {
-      actor.render(console);
+      actor->render(console);
    }
 }
 
 void Map::computeFov() { internalMap->computeFov(player->x, player->y, 5); }
 
-void Map::addEntity(Actor actor) {
-   int x = actor.x;
-   int y = actor.y;
+void Map::addEntity(Actor *actor) {
+   int x = actor->x;
+   int y = actor->y;
    if (isWalkable(x, y)) {
       actors.push_back(actor);
    }
