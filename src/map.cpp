@@ -51,6 +51,7 @@ void Map::render(tcod::Console &console) const {
             console.at({x, y}) = isWalkable(x, y)
                                      ? TCOD_ConsoleTile{'.', tcod::ColorRGB{50, 50, 100}, tcod::ColorRGB{0, 0, 0}}
                                      : TCOD_ConsoleTile{'#', tcod::ColorRGB{0, 0, 100}, tcod::ColorRGB{0, 0, 0}};
+         } else {
          }
       }
    }
@@ -59,11 +60,11 @@ void Map::render(tcod::Console &console) const {
    }
 }
 
-void Map::computeFov() { internalMap->computeFov(player->x, player->y, 5); }
+void Map::computeFov() { internalMap->computeFov(player->pos.x, player->pos.y, 5); }
 
 void Map::addEntity(Actor *actor) {
-   int x = actor->x;
-   int y = actor->y;
+   int x = actor->pos.x;
+   int y = actor->pos.y;
    if (isWalkable(x, y)) {
       actors.push_back(actor);
    }

@@ -1,9 +1,11 @@
 #pragma once
 #include <libtcod.hpp>
 
+#include "point.hpp"
+
 class Actor {
   public:
-   int x, y;  // pos on map
+   Point pos;  // pos on map
    int ch;  // char of the actor
    tcod::ColorRGB fg;
    tcod::ColorRGB bg;

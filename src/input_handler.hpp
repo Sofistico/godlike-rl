@@ -1,12 +1,14 @@
 #include <SDL.h>
 
+#include "action.hpp"
 #include "actor.hpp"
 #include "map.hpp"
+#include "point.hpp"
 
 struct Input {
    static bool move(SDL_Keycode ev, Actor &player, Map *map) {
-      int newXPos = player.x;
-      int newYPos = player.y;
+      int newXPos = player.pos.x;
+      int newYPos = player.pos.y;
       switch (ev) {
          case SDLK_KP_8:
          case SDLK_UP:
@@ -45,11 +47,6 @@ struct Input {
          default:
             return false;
       }
-      if (map->isWalkable(newXPos, newYPos)) {
-         player.x = newXPos;
-         player.y = newYPos;
-         return true;
-      }
-      return false;
+      return Actions::moveActor(player, {newXPos, newYPos}, map);
    }
 };
