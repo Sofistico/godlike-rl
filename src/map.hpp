@@ -18,6 +18,7 @@ class Map {
   public:
    int height, width;  // the width and height
    Actor *player;
+   // MapId level;
 
    inline bool isTransparent(int x, int y) const;
    bool isInFov(int x, int y) const;
@@ -38,4 +39,18 @@ class Map {
 
    // void dig(int x1, int y1, int x2, int y2);
    // void createRoom(bool first, int x1, int y1, int x2, int y2);
+};
+
+struct MapId {
+   bool operator==(const MapId rhs) const noexcept { return this->name == rhs.name; }
+   bool operator!=(const MapId rhs) const noexcept { return !(*this == rhs); }
+
+   std::string name;
+};
+
+template <>
+struct std::hash<MapId> {
+   std::size_t operator()(const MapId &id) const {
+      return std::hash<decltype(id.name)>{}(id.name) ^ std::hash<decltype(id.name)>{}(id.name);
+   }
 };

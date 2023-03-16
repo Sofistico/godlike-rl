@@ -22,6 +22,11 @@ Map::Map(int height, int width) : width(width), height(height) {
 Map::~Map() {
    delete internalMap;
    delete[] tiles;
+   delete player;
+   for (auto p : actors) {
+      delete p;
+   }
+   actors.clear();
 }
 
 inline bool Map::isTransparent(int x, int y) const { return tiles[x + y * width].isTransparent; }
