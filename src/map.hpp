@@ -1,5 +1,6 @@
 #pragma once
 #include <libtcod.hpp>
+#include <memory>
 #include <vector>
 
 #include "actor.hpp"
@@ -17,7 +18,7 @@ enum struct Tiles { Floor = 0, Wall };
 class Map {
   public:
    int height, width;  // the width and height
-   Actor *player;
+   std::shared_ptr<Actor> player;
    // MapId level;
 
    inline bool isTransparent(int x, int y) const;
@@ -27,15 +28,15 @@ class Map {
 
    void render(tcod::Console &console) const;
    void computeFov();
-   void addEntity(Actor *actor);
+   void addEntity(std::shared_ptr<Actor> actor);
 
    Map(int height, int width);
    ~Map();
 
   private:
    Tile *tiles;
-   TCODMap *internalMap;
-   std::vector<Actor *> actors;
+   std::shared_ptr<TCODMap> internalMap;
+   std::vector<std::shared_ptr<Actor>> actors;
 
    // void dig(int x1, int y1, int x2, int y2);
    // void createRoom(bool first, int x1, int y1, int x2, int y2);

@@ -2,7 +2,7 @@
 
 Map::Map(int height, int width) : width(width), height(height) {
    tiles = new Tile[height * width];
-   internalMap = new TCODMap(width, height);
+   internalMap = std::make_shared<TCODMap>(width, height);
 
    for (int x = 0; x < height; x++) {
       for (int y = 0; y < width; y++) {
@@ -20,11 +20,11 @@ Map::Map(int height, int width) : width(width), height(height) {
 };
 
 Map::~Map() {
-   delete internalMap;
+   internalMap.reset();
    delete[] tiles;
-   delete player;
+   player.reset();
    for (auto p : actors) {
-      delete p;
+      p.reset();
    }
    actors.clear();
 }
@@ -67,7 +67,7 @@ void Map::render(tcod::Console &console) const {
 
 void Map::computeFov() { internalMap->computeFov(player->pos.x, player->pos.y, 5); }
 
-void Map::addEntity(Actor *actor) {
+void Map::addEntity(std::shared_ptr<Actor> actor) {
    int x = actor->pos.x;
    int y = actor->pos.y;
    if (isWalkable(x, y)) {

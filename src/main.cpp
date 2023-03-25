@@ -7,6 +7,7 @@
 #include <filesystem>
 #include <iostream>
 #include <libtcod.hpp>
+#include <memory>
 
 #include "actor.hpp"
 #include "input_handler.hpp"
@@ -18,8 +19,8 @@
 
 static tcod::Console g_console;  // The global console object.
 static tcod::Context g_context;  // The global libtcod context.
-static Map *g_map;
-static Actor *g_player;
+static std::shared_ptr<Map> g_map;
+static std::shared_ptr<Actor> g_player;
 
 /// Return the data directory.
 auto get_data_dir() -> std::filesystem::path {
@@ -83,8 +84,8 @@ int main(int argc, char **argv) {
       params.console = g_console.get();
 
       g_context = tcod::Context(params);
-      g_map = new Map(10, 10);
-      g_player = new Actor(5, 5, '@', {255, 255, 255}, {0, 0, 0});
+      g_map = std::shared_ptr<Map>{new Map(10, 10)};
+      g_player = std::make_shared<Actor>(5, 5, '@', tcod::ColorRGB{255, 255, 255}, tcod::ColorRGB{0, 0, 0});
       g_map->addEntity(g_player);
       g_map->player = g_player;
       g_map->computeFov();

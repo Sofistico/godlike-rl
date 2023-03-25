@@ -1,12 +1,14 @@
 #include <SDL.h>
 
+#include <memory>
+
 #include "action.hpp"
 #include "actor.hpp"
 #include "map.hpp"
 #include "point.hpp"
 
 struct Input {
-   static bool move(SDL_Keycode ev, Actor &player, Map *map) {
+   static bool move(SDL_Keycode ev, Actor &player, std::shared_ptr<Map> map) {
       int newXPos = player.pos.x;
       int newYPos = player.pos.y;
       switch (ev) {

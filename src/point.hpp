@@ -10,9 +10,13 @@ struct Point {
    bool operator!=(const Point rhs) const noexcept { return !(*this == rhs); }
 
    int x, y;
+
+   Point(int x, int y) : x(x), y(y) {}
 };
 
 template <>
 struct std::hash<Point> {
-   std::size_t operator()(const Point &pos) const { return pos.x + pos.y * 97; }
+   std::size_t operator()(const Point &pos) const {
+      return static_cast<size_t>(pos.x) + static_cast<size_t>(pos.y) * 97;
+   }
 };

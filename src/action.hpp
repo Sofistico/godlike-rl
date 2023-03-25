@@ -4,7 +4,7 @@
 #include "point.hpp"
 
 struct Actions {
-   static bool moveActor(Actor &actor, Point pos, Map *currentMap) {
+   static bool moveActor(Actor &actor, Point pos, std::shared_ptr<Map> currentMap) {
       if (currentMap->isWalkable(pos.x, pos.y)) {
          actor.pos = pos;
          return true;
