@@ -23,7 +23,7 @@ static std::shared_ptr<Map> g_map;
 static std::shared_ptr<Actor> g_player;
 
 /// Return the data directory.
-auto get_data_dir() -> std::filesystem::path {
+static auto get_data_dir() -> std::filesystem::path {
    static auto root_directory = std::filesystem::path{"."};  // Begin at the working directory.
    while (!std::filesystem::exists(root_directory / "data")) {
       // If the current working directory is missing the data dir then it will assume it exists in any parent directory.
@@ -36,7 +36,7 @@ auto get_data_dir() -> std::filesystem::path {
 };
 
 /// Game loop.
-void main_loop() {
+static void main_loop() {
    // set up map and some basic tiles
    // Rendering.
    // tcod::print(g_console, {0, 0}, "Hello World", TCOD_ColorRGB{255, 255, 255}, std::nullopt);
