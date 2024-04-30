@@ -4,10 +4,11 @@
 
 #include "map.hpp"
 
-class World {
-  public:
-   void addMap(Map *map);
+class World
+{
+    public:
+        void addMap( Map *map );
 
-  private:
-   std::vector<Map *> maps;
+    private:
+        std::vector<Map> maps;
 };
